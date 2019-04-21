@@ -1,14 +1,29 @@
 package ru.dsoccer1980;
 
-import ru.dsoccer1980.annotations.AfterEach;
-import ru.dsoccer1980.annotations.BeforeEach;
-import ru.dsoccer1980.annotations.Test;
+import ru.dsoccer1980.annotations.*;
 
 public class AnnotationClient {
+
+    public AnnotationClient() {
+        System.out.println();
+        System.out.println("constructor");
+    }
+
+    @BeforeAll
+    static void beforeAll() {
+        System.out.println("BeforeAll");
+    }
+
+    @AfterAll
+    static void afterAll() {
+        System.out.println();
+        System.out.println("AfterAll");
+    }
 
     @BeforeEach
     public void beforeEach1() {
         System.out.println("beforeEach1");
+        throw new RuntimeException("Runtime Exception in beforeEach1");
     }
 
     @BeforeEach
@@ -19,6 +34,7 @@ public class AnnotationClient {
     @Test
     public void test1() {
         System.out.println("Test1");
+        throw new RuntimeException("Runtime Exception in test1");
     }
 
     @Test
@@ -42,6 +58,6 @@ public class AnnotationClient {
     }
 
     public void noAnnotation() {
-
+        System.out.println("no annotation");
     }
 }
