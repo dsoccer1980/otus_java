@@ -10,50 +10,49 @@ import java.util.List;
 public class MyJUnit {
 
     public static void run(Class<?> testClass) {
-        List<Method> listBeforeEach = new ArrayList<>();
-        List<Method> listAfterEach = new ArrayList<>();
-        List<Method> listBeforeAll = new ArrayList<>();
-        List<Method> listAfterAll = new ArrayList<>();
-        boolean hasTestAnnotation = false;
+        List<Method> methodsBeforeEach = new ArrayList<>();
+        List<Method> methodsAfterEach = new ArrayList<>();
+        List<Method> methodsBeforeAll = new ArrayList<>();
+        List<Method> methodsAfterAll = new ArrayList<>();
+        List<Method> methodsTest = new ArrayList<>();
         Method[] declaredMethods = testClass.getDeclaredMethods();
 
-        for (Method declaredMethod : declaredMethods) {
+        for (Method method : declaredMethods) {
 
-            if (declaredMethod.getAnnotation(AfterEach.class) != null) {
-                listAfterEach.add(declaredMethod);
+            if (method.getAnnotation(AfterEach.class) != null) {
+                methodsAfterEach.add(method);
             }
 
-            if (declaredMethod.getAnnotation(BeforeEach.class) != null) {
-                listBeforeEach.add(declaredMethod);
+            if (method.getAnnotation(BeforeEach.class) != null) {
+                methodsBeforeEach.add(method);
             }
 
-            if (declaredMethod.getAnnotation(BeforeAll.class) != null) {
-                listBeforeAll.add(declaredMethod);
+            if (method.getAnnotation(BeforeAll.class) != null) {
+                methodsBeforeAll.add(method);
             }
 
-            if (declaredMethod.getAnnotation(AfterAll.class) != null) {
-                listAfterAll.add(declaredMethod);
+            if (method.getAnnotation(AfterAll.class) != null) {
+                methodsAfterAll.add(method);
             }
 
-            if (declaredMethod.getAnnotation(Test.class) != null) {
-                hasTestAnnotation = true;
+            if (method.getAnnotation(Test.class) != null) {
+                methodsTest.add(method);
             }
         }
 
-        if (hasTestAnnotation) {
+        if (!methodsTest.isEmpty()) {
 
-            invokeMethodsFromListByObject(listBeforeAll, null);
+            invokeMethodsFromListByObject(methodsBeforeAll, null);
 
-            for (Method declaredMethod : declaredMethods) {
-                Test testAnnotation = declaredMethod.getAnnotation(Test.class);
-                if (testAnnotation != null) {
-                    Object object = getInstanceOfClass(testClass);
-                    invokeMethodsFromListByObject(listBeforeEach, object);
-                    invokeMethodByObject(declaredMethod, object);
-                    invokeMethodsFromListByObject(listAfterEach, object);
-                }
+            for (Method method : methodsTest) {
+                Object object = getInstanceOfClass(testClass);
+                invokeMethodsFromListByObject(methodsBeforeEach, object);
+                invokeMethodByObject(method, object);
+                invokeMethodsFromListByObject(methodsAfterEach, object);
+
             }
-            invokeMethodsFromListByObject(listAfterAll, null);
+
+            invokeMethodsFromListByObject(methodsAfterAll, null);
         }
     }
 
@@ -62,7 +61,6 @@ public class MyJUnit {
         return testClass.getDeclaredConstructor().newInstance();
     }
 
-    @SneakyThrows
     private static void invokeMethodByObject(Method method, Object object) {
         try {
             method.invoke(object);
