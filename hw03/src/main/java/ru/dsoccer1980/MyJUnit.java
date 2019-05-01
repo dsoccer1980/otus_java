@@ -42,17 +42,23 @@ public class MyJUnit {
 
         if (!methodsTest.isEmpty()) {
 
-            invokeMethodsFromListByObject(methodsBeforeAll, null);
+            if (!invokeMethodsFromListByObject(methodsBeforeAll, null)) {
+                invokeMethodsFromListByObject(methodsAfterAll, null);
+            } else {
 
-            for (Method method : methodsTest) {
-                Object object = getInstanceOfClass(testClass);
-                invokeMethodsFromListByObject(methodsBeforeEach, object);
-                invokeMethodByObject(method, object);
-                invokeMethodsFromListByObject(methodsAfterEach, object);
+                for (Method method : methodsTest) {
+                    Object object = getInstanceOfClass(testClass);
+                    if (!invokeMethodsFromListByObject(methodsBeforeEach, object)) {
+                        invokeMethodsFromListByObject(methodsAfterEach, object);
+                    } else {
+                        invokeMethodByObject(method, object);
+                        invokeMethodsFromListByObject(methodsAfterEach, object);
+                    }
 
+                }
+
+                invokeMethodsFromListByObject(methodsAfterAll, null);
             }
-
-            invokeMethodsFromListByObject(methodsAfterAll, null);
         }
     }
 
@@ -61,17 +67,23 @@ public class MyJUnit {
         return testClass.getDeclaredConstructor().newInstance();
     }
 
-    private static void invokeMethodByObject(Method method, Object object) {
+    private static boolean invokeMethodByObject(Method method, Object object) {
         try {
             method.invoke(object);
         } catch (Exception e) {
-            //nothing to do
+            System.out.println(e);
+            return false;
         }
+        return true;
     }
 
-    private static void invokeMethodsFromListByObject(List<Method> list, Object object) {
+    private static boolean invokeMethodsFromListByObject(List<Method> list, Object object) {
+        boolean result = true;
         for (Method method : list) {
-            invokeMethodByObject(method, object);
+            if (!invokeMethodByObject(method, object)) {
+                result = false;
+            }
         }
+        return result;
     }
 }

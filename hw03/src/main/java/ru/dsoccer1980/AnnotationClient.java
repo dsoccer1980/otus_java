@@ -12,6 +12,7 @@ public class AnnotationClient {
     @BeforeAll
     static void beforeAll() {
         System.out.println("BeforeAll");
+        // throw new RuntimeException("Runtime Exception in beforeAll");
     }
 
     @AfterAll
@@ -23,7 +24,7 @@ public class AnnotationClient {
     @BeforeEach
     public void beforeEach1() {
         System.out.println("beforeEach1");
-        throw new RuntimeException("Runtime Exception in beforeEach1");
+        //throw new RuntimeException("Runtime Exception in beforeEach1");
     }
 
     @BeforeEach
