@@ -10,6 +10,8 @@
 
     <modules>
         <module>hw01-maven</module>
+        <module>hw02</module>
+        <module>hw03</module>
     </modules>
 
     <properties>
@@ -24,6 +26,13 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>27.1-jre</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.6</version>
+                <scope>provided</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
