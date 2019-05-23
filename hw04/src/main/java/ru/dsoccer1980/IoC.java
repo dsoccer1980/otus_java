@@ -3,8 +3,8 @@ package ru.dsoccer1980;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 class IoC {
 
@@ -17,7 +17,7 @@ class IoC {
 
     static class DemoInvocationHandler implements InvocationHandler {
         private final ITestLogging testLogging;
-        private List<String> logMethods = new ArrayList<>();
+        private Set<String> logMethods = new HashSet<>();
 
         DemoInvocationHandler(ITestLogging testLogging) {
             this.testLogging = testLogging;
