@@ -42,7 +42,11 @@ public class JsonImplTest {
 
         assertThat(jsonImpl.toJson(new int[]{1, 2, 3})).isEqualTo(gson.toJson(new int[]{1, 2, 3}));
 
+        assertThat(jsonImpl.toJson(new String[]{"1", "2", "3"})).isEqualTo(gson.toJson(new String[]{"1", "2", "3"}));
+
         assertThat(jsonImpl.toJson(List.of(1, 2, 3))).isEqualTo(gson.toJson(List.of(1, 2, 3)));
+
+        assertThat(jsonImpl.toJson(List.of("1", "2", "3"))).isEqualTo(gson.toJson(List.of("1", "2", "3")));
 
         assertThat(jsonImpl.toJson(Collections.singletonList(1))).isEqualTo(gson.toJson(Collections.singletonList(1)));
     }
