@@ -12,6 +12,24 @@ public class JsonImpl {
 
 
     public String toJson(Object object) throws IllegalAccessException {
+        if (object == null) {
+            return "null";
+        }
+        if (object instanceof Number || object instanceof Boolean) {
+            return "" + object.toString() + "";
+        }
+        if (object instanceof Character || object instanceof String) {
+            return "\"" + object.toString() + "\"";
+        }
+
+        if (object.getClass().isArray()) {
+            return getJsonFromArray(object);
+        }
+
+        if (object instanceof Collection) {
+            return getJsonFromCollection((Collection) object);
+        }
+
         JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
 
         Field[] declaredFields = object.getClass().getDeclaredFields();
@@ -46,5 +64,28 @@ public class JsonImpl {
         }
 
         return objectBuilder.build().toString();
+    }
+
+    private String getJsonFromCollection(Collection object) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("[");
+        for (Object element : object) {
+            stringBuilder.append(element).append(",");
+        }
+
+        stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+        stringBuilder.append("]");
+        return stringBuilder.toString();
+    }
+
+    private String getJsonFromArray(Object object) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("[");
+        for (int index = 0; index < Array.getLength(object); index++) {
+            stringBuilder.append(Array.get(object, index)).append(",");
+        }
+        stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+        stringBuilder.append("]");
+        return stringBuilder.toString();
     }
 }
