@@ -6,18 +6,24 @@ import ru.dsoccer1980.jdbc.JdbcTemplate;
 import ru.dsoccer1980.jdbc.JdbcTemplateImpl;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 public class Executor {
     private static final String URL = "jdbc:h2:mem:test";
 
 
     public static void main(String[] args) throws Exception {
-        Executor demo = new Executor();
-        Connection connection = demo.getConnection();
-        demo.createTable(connection);
+        Connection connection = DbUtils.getConnection(URL);
+
+        String sqlCreateTable = "create table user(" +
+                "id bigint(20) NOT NULL auto_increment," +
+                "name varchar(255)," +
+                "age int(3))";
+        DbUtils.createTable(connection, sqlCreateTable);
+        sqlCreateTable = "create table account(" +
+                "no bigint(20) NOT NULL auto_increment," +
+                "type varchar(255)," +
+                "rest number)";
+        DbUtils.createTable(connection, sqlCreateTable);
 
 
         JdbcTemplate<User> jdbcTemplate = new JdbcTemplateImpl<>(connection);
@@ -41,30 +47,6 @@ public class Executor {
         System.out.println(jdbcTemplate2.load(2L, Account.class));
 
         connection.close();
-    }
-
-    private Connection getConnection() throws SQLException {
-        Connection connection = DriverManager.getConnection(URL);
-        connection.setAutoCommit(false);
-        return connection;
-    }
-
-    private void createTable(Connection connection) throws SQLException {
-        try (PreparedStatement pst = connection.prepareStatement(
-                "create table user(" +
-                        "id bigint(20) NOT NULL auto_increment," +
-                        " name varchar(255)," +
-                        " age int(3))")) {
-            pst.executeUpdate();
-        }
-
-        try (PreparedStatement pst = connection.prepareStatement(
-                "create table account(" +
-                        "no bigint(20) NOT NULL auto_increment," +
-                        " type varchar(255)," +
-                        " rest number)")) {
-            pst.executeUpdate();
-        }
     }
 
 
