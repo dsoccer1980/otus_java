@@ -1,4 +1,4 @@
-package ru.dsoccer1980;
+package ru.dsoccer1980.service;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
