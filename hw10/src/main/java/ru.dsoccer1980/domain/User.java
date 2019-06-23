@@ -4,10 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -26,9 +24,13 @@ public class User {
     @OneToOne
     private AddressDataSet addressDataSet;
 
-    public User(String name, int age, AddressDataSet addressDataSet) {
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<PhoneDataSet> phoneDataSets;
+
+    public User(String name, int age, AddressDataSet addressDataSet, List<PhoneDataSet> phoneDataSets) {
         this.name = name;
         this.age = age;
         this.addressDataSet = addressDataSet;
+        this.phoneDataSets = phoneDataSets;
     }
 }

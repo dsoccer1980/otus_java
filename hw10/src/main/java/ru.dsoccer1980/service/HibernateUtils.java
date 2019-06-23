@@ -8,9 +8,10 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import ru.dsoccer1980.domain.Account;
 import ru.dsoccer1980.domain.AddressDataSet;
+import ru.dsoccer1980.domain.PhoneDataSet;
 import ru.dsoccer1980.domain.User;
 
-public class DbUtils {
+public class HibernateUtils {
 
     public static SessionFactory getSessionFactory() {
         SessionFactory sessionFactory;
@@ -24,6 +25,7 @@ public class DbUtils {
                 .addAnnotatedClass(User.class)
                 .addAnnotatedClass(Account.class)
                 .addAnnotatedClass(AddressDataSet.class)
+                .addAnnotatedClass(PhoneDataSet.class)
                 .getMetadataBuilder()
                 .build();
 

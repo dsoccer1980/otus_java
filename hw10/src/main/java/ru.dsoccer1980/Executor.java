@@ -2,22 +2,23 @@ package ru.dsoccer1980;
 
 import org.hibernate.SessionFactory;
 import ru.dsoccer1980.domain.AddressDataSet;
+import ru.dsoccer1980.domain.PhoneDataSet;
 import ru.dsoccer1980.domain.User;
 import ru.dsoccer1980.jdbc.HibernateImpl;
 import ru.dsoccer1980.jdbc.JdbcTemplate;
-import ru.dsoccer1980.service.DbUtils;
+import ru.dsoccer1980.service.HibernateUtils;
+
+import java.util.List;
 
 public class Executor {
-    private static final String URL = "jdbc:h2:mem:test";
-
 
     public static void main(String[] args) throws Exception {
-        SessionFactory sessionFactory = DbUtils.getSessionFactory();
+        SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
 
         JdbcTemplate<User> userTemplate = new HibernateImpl<>(sessionFactory);
-        User user1 = new User("User1 name", 23, null);
+        User user1 = new User("User1 name", 23, null, null);
         userTemplate.create(user1);
-        User user2 = new User("User2 name", 39, null);
+        User user2 = new User("User2 name", 39, null, null);
         userTemplate.create(user2);
 
         System.out.println(">>>>>>>>>>>>>> User2: " + userTemplate.load(user2.getId(), User.class));
@@ -32,8 +33,13 @@ public class Executor {
         addressTemplate.create(addressDataSet);
         System.out.println(">>>>>>>>>>>>>>" + addressTemplate.load(addressDataSet.getId(), AddressDataSet.class));
 
+        JdbcTemplate<PhoneDataSet> phonesTemplate = new HibernateImpl<>(sessionFactory);
+        PhoneDataSet phoneDataSet1 = new PhoneDataSet("12345678");
+        phonesTemplate.create(phoneDataSet1);
+        PhoneDataSet phoneDataSet2 = new PhoneDataSet("5795436");
+        phonesTemplate.create(phoneDataSet2);
 
-        User user3 = new User("User3 name", 25, addressDataSet);
+        User user3 = new User("User3 name", 25, addressDataSet, List.of(phoneDataSet1, phoneDataSet2));
         userTemplate.create(user3);
         System.out.println(">>>>>>>>>>>>>>" + userTemplate.load(user3.getId(), User.class));
 

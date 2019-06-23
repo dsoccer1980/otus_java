@@ -4,7 +4,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 public class HibernateImpl<T> implements JdbcTemplate<T> {
-    private static final String URL = "jdbc:h2:mem:testDB;DB_CLOSE_DELAY=-1";
     private final SessionFactory sessionFactory;
 
     public HibernateImpl(SessionFactory sessionFactory) {
