@@ -22,4 +22,8 @@ public class Account {
 
     private Number rest;
 
+    public Account(String type, Number rest) {
+        this.type = type;
+        this.rest = rest;
+    }
 }

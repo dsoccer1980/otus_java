@@ -1,6 +1,7 @@
 package ru.dsoccer1980;
 
 import org.hibernate.SessionFactory;
+import ru.dsoccer1980.domain.Account;
 import ru.dsoccer1980.domain.AddressDataSet;
 import ru.dsoccer1980.domain.PhoneDataSet;
 import ru.dsoccer1980.domain.User;
@@ -29,9 +30,8 @@ public class Executor {
         System.out.println(">>>>>>>>>>>>>> User2 updated: " + userTemplate.load(user2.getId(), User.class));
 
         JdbcTemplate<AddressDataSet> addressTemplate = new HibernateImpl<>(sessionFactory);
-        AddressDataSet addressDataSet = new AddressDataSet("ul. Lenina");
+        AddressDataSet addressDataSet = new AddressDataSet("Lenin street");
         addressTemplate.create(addressDataSet);
-        System.out.println(">>>>>>>>>>>>>>" + addressTemplate.load(addressDataSet.getId(), AddressDataSet.class));
 
         JdbcTemplate<PhoneDataSet> phonesTemplate = new HibernateImpl<>(sessionFactory);
         PhoneDataSet phoneDataSet1 = new PhoneDataSet("12345678");
@@ -41,21 +41,29 @@ public class Executor {
 
         User user3 = new User("User3 name", 25, addressDataSet, List.of(phoneDataSet1, phoneDataSet2));
         userTemplate.create(user3);
-        System.out.println(">>>>>>>>>>>>>>" + userTemplate.load(user3.getId(), User.class));
+        System.out.println(">>>>>>>>>>>>>> User3: " + userTemplate.load(user3.getId(), User.class));
 
 
-        addressDataSet.setStreet("Update ul");
+        addressDataSet.setStreet("Update Lenin street");
         addressTemplate.update(addressDataSet);
 
-        System.out.println(">>>>>>>>>>>>>>" + userTemplate.load(user3.getId(), User.class));
+        PhoneDataSet phoneDataSet3 = new PhoneDataSet("111111");
+        phonesTemplate.create(phoneDataSet3);
+        user3.setPhoneDataSets(List.of(phoneDataSet1, phoneDataSet2, phoneDataSet3));
+        userTemplate.update(user3);
 
-     /*   JdbcTemplate<Account> jdbcTemplate2 = new HibernateImpl<>();
-        jdbcTemplate2.create(new Account(1L, "Account1 name", 231));
-        jdbcTemplate2.create(new Account(2L, "Account2 name", 391));
-        System.out.println(">>>>>>>>>>>>>>" + jdbcTemplate2.load(2L, Account.class));
+        System.out.println(">>>>>>>>>>>>>> User3 updated: " + userTemplate.load(user3.getId(), User.class));
 
-        jdbcTemplate2.update((new Account(2L, "Account2 updatedName", 3911)));
-        System.out.println(">>>>>>>>>>>>>>" + jdbcTemplate2.load(2L, Account.class));*/
+
+        JdbcTemplate<Account> jdbcTemplate2 = new HibernateImpl<>(sessionFactory);
+        Account account1 = new Account("Account1 name", 231);
+        jdbcTemplate2.create(account1);
+        Account account2 = new Account("Account2 name", 391);
+        jdbcTemplate2.create(account2);
+        System.out.println(">>>>>>>>>>>>>>" + jdbcTemplate2.load(account1.getNo(), Account.class));
+
+        jdbcTemplate2.update((new Account(account2.getNo(), "Account2 updatedName", 3911)));
+        System.out.println(">>>>>>>>>>>>>>" + jdbcTemplate2.load(account2.getNo(), Account.class));
     }
 
 
