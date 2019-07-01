@@ -14,7 +14,7 @@ import java.util.List;
 public class Executor {
 
     public static void main(String[] args) throws Exception {
-        SessionFactory sessionFactory = HibernateUtils.getSessionFactory("hibernate.cfg.xml");
+        SessionFactory sessionFactory = HibernateUtils.getSessionFactory("hibernate.cfg.xml", Account.class, User.class, AddressDataSet.class, PhoneDataSet.class);
 
         JdbcTemplate<User> userTemplate = new HibernateImpl<>(sessionFactory);
         User user1 = new User("User1 name", 23, null, null);
