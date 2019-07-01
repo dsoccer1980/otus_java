@@ -13,10 +13,10 @@ import ru.dsoccer1980.domain.User;
 
 public class HibernateUtils {
 
-    public static SessionFactory getSessionFactory() {
+    public static SessionFactory getSessionFactory(String configFile) {
         SessionFactory sessionFactory;
         Configuration configuration = new Configuration()
-                .configure("hibernate.cfg.xml");
+                .configure(configFile);
 
         StandardServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties()).build();

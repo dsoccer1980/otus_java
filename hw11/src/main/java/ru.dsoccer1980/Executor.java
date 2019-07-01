@@ -1,12 +1,12 @@
 package ru.dsoccer1980;
 
 import org.hibernate.SessionFactory;
+import ru.dsoccer1980.dao.HibernateImpl;
+import ru.dsoccer1980.dao.JdbcTemplate;
 import ru.dsoccer1980.domain.Account;
 import ru.dsoccer1980.domain.AddressDataSet;
 import ru.dsoccer1980.domain.PhoneDataSet;
 import ru.dsoccer1980.domain.User;
-import ru.dsoccer1980.dao.HibernateImpl;
-import ru.dsoccer1980.dao.JdbcTemplate;
 import ru.dsoccer1980.service.HibernateUtils;
 
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 public class Executor {
 
     public static void main(String[] args) throws Exception {
-        SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
+        SessionFactory sessionFactory = HibernateUtils.getSessionFactory("hibernate.cfg.xml");
 
         JdbcTemplate<User> userTemplate = new HibernateImpl<>(sessionFactory);
         User user1 = new User("User1 name", 23, null, null);
