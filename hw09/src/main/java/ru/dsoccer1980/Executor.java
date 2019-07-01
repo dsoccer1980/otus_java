@@ -2,14 +2,14 @@ package ru.dsoccer1980;
 
 import ru.dsoccer1980.domain.Account;
 import ru.dsoccer1980.domain.User;
-import ru.dsoccer1980.jdbc.JdbcTemplate;
-import ru.dsoccer1980.jdbc.JdbcTemplateImpl;
+import ru.dsoccer1980.dao.JdbcTemplate;
+import ru.dsoccer1980.dao.JdbcTemplateImpl;
 import ru.dsoccer1980.service.DbUtils;
 
 import java.sql.Connection;
 
 public class Executor {
-    private static final String URL = "jdbc:h2:mem:test";
+    private static final String URL = "dao:h2:mem:test";
 
 
     public static void main(String[] args) throws Exception {

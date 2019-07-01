@@ -1,4 +1,4 @@
-package ru.dsoccer1980.jdbc;
+package ru.dsoccer1980.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

@@ -5,8 +5,8 @@ import ru.dsoccer1980.domain.Account;
 import ru.dsoccer1980.domain.AddressDataSet;
 import ru.dsoccer1980.domain.PhoneDataSet;
 import ru.dsoccer1980.domain.User;
-import ru.dsoccer1980.jdbc.HibernateImpl;
-import ru.dsoccer1980.jdbc.JdbcTemplate;
+import ru.dsoccer1980.dao.HibernateImpl;
+import ru.dsoccer1980.dao.JdbcTemplate;
 import ru.dsoccer1980.service.HibernateUtils;
 
 import java.util.List;
