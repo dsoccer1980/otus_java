@@ -21,8 +21,8 @@ public class Executor {
         CacheEngine<Long, User> cache = new CacheEngineImpl<>(size, 1000, 0, false);
 
         JdbcTemplate<User> userTemplate = new HibernateImpl<>(sessionFactory, cache);
-        User user1 = new User("User1 name", 23, null, null);
-        User user2 = new User("User2 name", 39, null, null);
+        User user1 = new User("User1 name", 23);
+        User user2 = new User("User2 name", 39);
         userTemplate.create(user1);
         userTemplate.create(user2);
 

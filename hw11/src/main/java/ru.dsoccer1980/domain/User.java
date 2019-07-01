@@ -24,7 +24,7 @@ public class User {
     @OneToOne
     private AddressDataSet addressDataSet;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PhoneDataSet> phoneDataSets;
 
     public User(String name, int age, AddressDataSet addressDataSet, List<PhoneDataSet> phoneDataSets) {
@@ -32,5 +32,19 @@ public class User {
         this.age = age;
         this.addressDataSet = addressDataSet;
         this.phoneDataSets = phoneDataSets;
+    }
+
+    public User(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                '}';
     }
 }
