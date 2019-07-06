@@ -2,10 +2,12 @@ package ru.dsoccer1980.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import ru.dsoccer1980.cache.CacheEngine;
 import ru.dsoccer1980.cache.MyElement;
 
 import java.lang.reflect.Field;
+import java.util.List;
 import java.util.Optional;
 
 public class HibernateImpl<T> implements JdbcTemplate<T> {
@@ -51,6 +53,14 @@ public class HibernateImpl<T> implements JdbcTemplate<T> {
             T t = session.get(clazz, id);
             putInCache(id, t);
             return t;
+        }
+    }
+
+    @Override
+    public List<T> getAll(Class<T> clazz) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<T> query = session.createQuery("select u from User u", clazz);
+            return query.getResultList();
         }
     }
 

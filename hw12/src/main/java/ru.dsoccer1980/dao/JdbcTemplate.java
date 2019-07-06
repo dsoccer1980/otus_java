@@ -1,6 +1,7 @@
 package ru.dsoccer1980.dao;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public interface JdbcTemplate<T> {
 
@@ -9,4 +10,6 @@ public interface JdbcTemplate<T> {
     void update(T objectData) throws SQLException;
 
     T load(long id, Class<T> clazz) throws SQLException;
+
+    List<T> getAll(Class<T> clazz);
 }

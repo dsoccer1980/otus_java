@@ -22,10 +22,10 @@ public class User {
     private int age;
 
     @OneToOne
-    private AddressDataSet addressDataSet;
+    private transient AddressDataSet addressDataSet;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<PhoneDataSet> phoneDataSets;
+    private transient List<PhoneDataSet> phoneDataSets;
 
     public User(String name, int age, AddressDataSet addressDataSet, List<PhoneDataSet> phoneDataSets) {
         this.name = name;
