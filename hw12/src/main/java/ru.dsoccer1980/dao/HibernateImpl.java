@@ -39,19 +39,32 @@ public class HibernateImpl<T> implements JdbcTemplate<T> {
 
     @Override
     public T load(long id, Class<T> clazz) {
+        T valueFromCache = getFromCache(id);
+
+        if (valueFromCache != null) {
+            return valueFromCache;
+        }
+
+        try (Session session = sessionFactory.openSession()) {
+            T t = session.get(clazz, id);
+            putInCache(id, t);
+            return t;
+        }
+    }
+
+    private T getFromCache(long id) {
         if (cacheEngine != null) {
             MyElement<Long, T> myElement = cacheEngine.get(id);
             if (myElement != null) {
                 return myElement.getValue();
             }
         }
+        return null;
+    }
 
-        try (Session session = sessionFactory.openSession()) {
-            T t = session.get(clazz, id);
-            if (cacheEngine != null) {
-                cacheEngine.put(new MyElement<>(id, t));
-            }
-            return t;
+    private void putInCache(long id, T t) {
+        if (cacheEngine != null) {
+            cacheEngine.put(new MyElement<>(id, t));
         }
     }
 
