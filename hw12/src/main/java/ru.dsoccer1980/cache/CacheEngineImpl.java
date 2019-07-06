@@ -77,6 +77,11 @@ public class CacheEngineImpl<K, V> implements CacheEngine<K, V> {
         timer.cancel();
     }
 
+    @Override
+    public void update(MyElement<K, V> myElement) {
+        elements.computeIfPresent(myElement.getKey(), (k, v) -> new SoftReference<>(myElement));
+    }
+
     private TimerTask getTimerTask(final K key, Function<MyElement<K, V>, Long> timeFunction) {
         return new TimerTask() {
             @Override

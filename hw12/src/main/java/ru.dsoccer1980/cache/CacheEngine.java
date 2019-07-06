@@ -11,4 +11,6 @@ public interface CacheEngine<K, V> {
     int getMissCount();
 
     void dispose();
+
+    void update(MyElement<K, V> element);
 }

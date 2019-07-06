@@ -5,6 +5,9 @@ import org.hibernate.SessionFactory;
 import ru.dsoccer1980.cache.CacheEngine;
 import ru.dsoccer1980.cache.MyElement;
 
+import java.lang.reflect.Field;
+import java.util.Optional;
+
 public class HibernateImpl<T> implements JdbcTemplate<T> {
     private final SessionFactory sessionFactory;
     private CacheEngine<Long, T> cacheEngine;
@@ -33,6 +36,7 @@ public class HibernateImpl<T> implements JdbcTemplate<T> {
             session.beginTransaction();
             session.update(objectData);
             session.getTransaction().commit();
+            updateObjectInCache(objectData);
         }
 
     }
@@ -66,6 +70,24 @@ public class HibernateImpl<T> implements JdbcTemplate<T> {
         if (cacheEngine != null) {
             cacheEngine.put(new MyElement<>(id, t));
         }
+    }
+
+    private void updateObjectInCache(T objectData) {
+        if (cacheEngine != null) {
+            getId(objectData).ifPresent(id -> new MyElement<>(id, objectData));
+        }
+    }
+
+    private Optional<Long> getId(T objectData) {
+        try {
+            Field fieldId = objectData.getClass().getDeclaredField("id");
+            fieldId.setAccessible(true);
+            Long id = (Long) fieldId.get(objectData);
+            return Optional.ofNullable(id);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
     }
 
 }
