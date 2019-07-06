@@ -24,10 +24,7 @@ import ru.dsoccer1980.domain.PhoneDataSet;
 import ru.dsoccer1980.domain.User;
 import ru.dsoccer1980.filters.SimpleFilter;
 import ru.dsoccer1980.service.HibernateUtils;
-import ru.dsoccer1980.servlets.Data;
-import ru.dsoccer1980.servlets.GetUsersServlet;
-import ru.dsoccer1980.servlets.PrivateInfo;
-import ru.dsoccer1980.servlets.PublicInfo;
+import ru.dsoccer1980.servlets.*;
 
 import java.net.URL;
 import java.util.Collections;
@@ -65,7 +62,9 @@ public class Appl {
         context.addServlet(new ServletHolder(new PublicInfo()), "/publicInfo");
         context.addServlet(new ServletHolder(new PrivateInfo()), "/privateInfo");
         context.addServlet(new ServletHolder(new Data()), "/data/*");
-        context.addServlet(new ServletHolder(new GetUsersServlet(userTemplate)), "/users");
+        context.addServlet(new ServletHolder(new GetUsersServlet(userTemplate)), "/admin/users");
+        context.addServlet(new ServletHolder(new AddUserServlet(userTemplate)), "/admin/addUser");
+        context.addServlet(new ServletHolder(new AdminServlet()), "/admin");
 
 
         context.addFilter(new FilterHolder(new SimpleFilter()), "/*", null);
@@ -99,7 +98,7 @@ public class Appl {
         constraint.setRoles(new String[]{"user", "admin"});
 
         ConstraintMapping mapping = new ConstraintMapping();
-        mapping.setPathSpec("/privateInfo/*");
+        mapping.setPathSpec("/admin/*");
         mapping.setConstraint(constraint);
 
         ConstraintSecurityHandler security = new ConstraintSecurityHandler();

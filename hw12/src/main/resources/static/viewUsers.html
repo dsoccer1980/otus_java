@@ -3,7 +3,7 @@
     <title>Users list</title>
     <script type="text/JavaScript">
         function getDataFromServer() {
-            fetch('/users')
+            fetch('/admin/users')
                 .then(function (response) {
                     return response.json();
                 })
@@ -27,6 +27,15 @@
 
 <table id="users" border="1">
 </table>
+
+<br> <br>
+
+<H3>Add new user</H3>
+<form method="post" action="/admin/addUser">
+    Name: <input type="text" name="user_name"> <br> <br>
+    Age:  <input type="text" name="age"> <br> <br>
+    <input type="submit">
+</form>
 
 </body>
 </html>
