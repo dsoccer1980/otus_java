@@ -1,10 +1,12 @@
 package ru.dsoccer1980.cache;
 
+import java.util.Optional;
+
 public interface CacheEngine<K, V> {
 
     void put(MyElement<K, V> element);
 
-    MyElement<K, V> get(K key);
+    Optional<MyElement<K, V>> get(K key);
 
     int getHitCount();
 

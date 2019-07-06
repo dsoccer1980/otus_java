@@ -43,10 +43,8 @@ public class HibernateImpl<T> implements JdbcTemplate<T> {
 
     @Override
     public T load(long id, Class<T> clazz) {
-        T valueFromCache = getFromCache(id);
-
-        if (valueFromCache != null) {
-            return valueFromCache;
+        if (getFromCache(id).isPresent()) {
+            return getFromCache(id).get();
         }
 
         try (Session session = sessionFactory.openSession()) {
@@ -56,14 +54,13 @@ public class HibernateImpl<T> implements JdbcTemplate<T> {
         }
     }
 
-    private T getFromCache(long id) {
+    private Optional<T> getFromCache(long id) {
+        Optional<T> result = Optional.empty();
         if (cacheEngine != null) {
-            MyElement<Long, T> myElement = cacheEngine.get(id);
-            if (myElement != null) {
-                return myElement.getValue();
-            }
+            Optional<MyElement<Long, T>> myElement = cacheEngine.get(id);
+            result = myElement.map(MyElement::getValue);
         }
-        return null;
+        return result;
     }
 
     private void putInCache(long id, T t) {

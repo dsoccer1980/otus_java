@@ -1,10 +1,7 @@
 package ru.dsoccer1980.cache;
 
 import java.lang.ref.SoftReference;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 import java.util.function.Function;
 
 public class CacheEngineImpl<K, V> implements CacheEngine<K, V> {
@@ -49,15 +46,13 @@ public class CacheEngineImpl<K, V> implements CacheEngine<K, V> {
         }
     }
 
-    public MyElement<K, V> get(K key) {
+    public Optional<MyElement<K, V>> get(K key) {
         SoftReference<MyElement<K, V>> element = elements.get(key);
-        MyElement<K, V> result = null;
+        Optional<MyElement<K, V>> result = Optional.empty();
         if (element != null) {
             hit++;
-            result = element.get();
-            if (result != null) {
-                result.setAccessed();
-            }
+            result = Optional.ofNullable(element.get());
+            result.ifPresent(MyElement::setAccessed);
         } else {
             miss++;
         }
