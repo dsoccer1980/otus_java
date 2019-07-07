@@ -12,16 +12,8 @@ import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.security.Constraint;
-import org.hibernate.SessionFactory;
-import ru.dsoccer1980.cache.CacheEngine;
-import ru.dsoccer1980.cache.CacheEngineImpl;
-import ru.dsoccer1980.dao.HibernateImpl;
 import ru.dsoccer1980.dao.JdbcTemplate;
-import ru.dsoccer1980.domain.Account;
-import ru.dsoccer1980.domain.AddressDataSet;
-import ru.dsoccer1980.domain.PhoneDataSet;
 import ru.dsoccer1980.domain.User;
-import ru.dsoccer1980.service.HibernateUtils;
 import ru.dsoccer1980.servlets.AddUserServlet;
 import ru.dsoccer1980.servlets.AdminServlet;
 import ru.dsoccer1980.servlets.GetUsersServlet;
@@ -30,23 +22,16 @@ import java.net.URL;
 import java.util.Collections;
 
 
-public class Appl {
+public class ServerImpl {
     private final static int PORT = 8080;
     private JdbcTemplate<User> userTemplate;
 
+    public ServerImpl(JdbcTemplate<User> userTemplate) {
+        this.userTemplate = userTemplate;
+    }
 
     public void start() throws Exception {
-        SessionFactory sessionFactory = HibernateUtils.getSessionFactory("hibernate.cfg.xml",
-                Account.class, User.class, AddressDataSet.class, PhoneDataSet.class);
 
-        int size = 5;
-        CacheEngine<Long, User> cache = new CacheEngineImpl<>(size, 1000, 0, false);
-
-        userTemplate = new HibernateImpl<>(sessionFactory, cache);
-        User user1 = new User("User1 name", 23);
-        User user2 = new User("User2 name", 39);
-        userTemplate.create(user1);
-        userTemplate.create(user2);
 
         Server server = createServer(PORT);
         server.start();
@@ -73,7 +58,7 @@ public class Appl {
         resourceHandler.setDirectoriesListed(false);
         resourceHandler.setWelcomeFiles(new String[]{"index.html"});
 
-        URL fileDir = Appl.class.getClassLoader().getResource("static");
+        URL fileDir = ServerImpl.class.getClassLoader().getResource("static");
         if (fileDir == null) {
             throw new RuntimeException("File Directory not found");
         }
@@ -94,7 +79,7 @@ public class Appl {
         ConstraintSecurityHandler security = new ConstraintSecurityHandler();
         security.setAuthenticator(new BasicAuthenticator());
 
-        URL propFile = Appl.class.getClassLoader().getResource("realm.properties");
+        URL propFile = ServerImpl.class.getClassLoader().getResource("realm.properties");
         if (propFile == null) {
             throw new RuntimeException("Realm property file not found");
         }
