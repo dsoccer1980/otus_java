@@ -1,4 +1,4 @@
-package ru.dsoccer1980;
+package ru.dsoccer1980.server;
 
 import org.eclipse.jetty.security.ConstraintMapping;
 import org.eclipse.jetty.security.ConstraintSecurityHandler;
@@ -9,7 +9,6 @@ import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
-import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.security.Constraint;
@@ -22,9 +21,10 @@ import ru.dsoccer1980.domain.Account;
 import ru.dsoccer1980.domain.AddressDataSet;
 import ru.dsoccer1980.domain.PhoneDataSet;
 import ru.dsoccer1980.domain.User;
-import ru.dsoccer1980.filters.SimpleFilter;
 import ru.dsoccer1980.service.HibernateUtils;
-import ru.dsoccer1980.servlets.*;
+import ru.dsoccer1980.servlets.AddUserServlet;
+import ru.dsoccer1980.servlets.AdminServlet;
+import ru.dsoccer1980.servlets.GetUsersServlet;
 
 import java.net.URL;
 import java.util.Collections;
@@ -34,11 +34,8 @@ public class Appl {
     private final static int PORT = 8080;
     private JdbcTemplate<User> userTemplate;
 
-    public static void main(String[] args) throws Exception {
-        new Appl().start();
-    }
 
-    private void start() throws Exception {
+    public void start() throws Exception {
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory("hibernate.cfg.xml",
                 Account.class, User.class, AddressDataSet.class, PhoneDataSet.class);
 
@@ -51,23 +48,16 @@ public class Appl {
         userTemplate.create(user1);
         userTemplate.create(user2);
 
-
         Server server = createServer(PORT);
         server.start();
         server.join();
     }
 
-    public Server createServer(int port) {
+    private Server createServer(int port) {
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        context.addServlet(new ServletHolder(new PublicInfo()), "/publicInfo");
-        context.addServlet(new ServletHolder(new PrivateInfo()), "/privateInfo");
-        context.addServlet(new ServletHolder(new Data()), "/data/*");
         context.addServlet(new ServletHolder(new GetUsersServlet(userTemplate)), "/admin/users");
         context.addServlet(new ServletHolder(new AddUserServlet(userTemplate)), "/admin/addUser");
         context.addServlet(new ServletHolder(new AdminServlet()), "/admin");
-
-
-        context.addFilter(new FilterHolder(new SimpleFilter()), "/*", null);
 
         Server server = new Server(port);
         server.setHandler(new HandlerList(context));
