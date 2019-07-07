@@ -25,14 +25,19 @@ import java.util.Collections;
 public class ServerImpl {
     private final int port;
     private JdbcTemplate<User> userTemplate;
+    private Server server;
 
     public ServerImpl(JdbcTemplate<User> userTemplate, int port) {
         this.userTemplate = userTemplate;
         this.port = port;
+        server = createServer(port);
+    }
+
+    public Server getServer() {
+        return server;
     }
 
     public void start() throws Exception {
-        Server server = createServer(port);
         server.start();
         server.join();
     }
