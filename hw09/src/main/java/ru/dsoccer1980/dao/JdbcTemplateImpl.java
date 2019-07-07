@@ -1,4 +1,4 @@
-package ru.dsoccer1980.jdbc;
+package ru.dsoccer1980.dao;
 
 import ru.dsoccer1980.service.ExecutorHelper;
 
