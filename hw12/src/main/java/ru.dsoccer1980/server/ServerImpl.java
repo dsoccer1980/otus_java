@@ -23,17 +23,16 @@ import java.util.Collections;
 
 
 public class ServerImpl {
-    private final static int PORT = 8080;
+    private final int port;
     private JdbcTemplate<User> userTemplate;
 
-    public ServerImpl(JdbcTemplate<User> userTemplate) {
+    public ServerImpl(JdbcTemplate<User> userTemplate, int port) {
         this.userTemplate = userTemplate;
+        this.port = port;
     }
 
     public void start() throws Exception {
-
-
-        Server server = createServer(PORT);
+        Server server = createServer(port);
         server.start();
         server.join();
     }

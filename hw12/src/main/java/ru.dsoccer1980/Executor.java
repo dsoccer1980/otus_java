@@ -13,6 +13,7 @@ import ru.dsoccer1980.server.ServerImpl;
 import ru.dsoccer1980.service.HibernateUtils;
 
 public class Executor {
+    private final static int PORT = 8080;
 
     public static void main(String[] args) throws Exception {
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory("hibernate.cfg.xml",
@@ -28,7 +29,7 @@ public class Executor {
         userTemplate.create(user2);
 
 
-        new ServerImpl(userTemplate).start();
+        new ServerImpl(userTemplate, PORT).start();
     }
 
 
