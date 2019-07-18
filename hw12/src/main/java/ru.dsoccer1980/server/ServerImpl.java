@@ -19,17 +19,18 @@ import ru.dsoccer1980.servlets.AdminServlet;
 import ru.dsoccer1980.servlets.GetUsersServlet;
 
 import java.net.URL;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 
 
 public class ServerImpl {
-    private final int port;
+
     private JdbcTemplate<User> userTemplate;
     private Server server;
 
     public ServerImpl(JdbcTemplate<User> userTemplate, int port) {
         this.userTemplate = userTemplate;
-        this.port = port;
         server = createServer(port);
     }
 
@@ -66,7 +67,7 @@ public class ServerImpl {
         if (fileDir == null) {
             throw new RuntimeException("File Directory not found");
         }
-        resourceHandler.setResourceBase(fileDir.getPath());
+        resourceHandler.setResourceBase(URLDecoder.decode(fileDir.getPath(), StandardCharsets.UTF_8));
         return resourceHandler;
     }
 

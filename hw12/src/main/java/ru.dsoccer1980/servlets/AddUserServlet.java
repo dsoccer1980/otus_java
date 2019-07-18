@@ -13,6 +13,8 @@ import java.util.Objects;
 public class AddUserServlet extends HttpServlet {
 
     private JdbcTemplate<User> userTemplate;
+    private final String USER_NAME = "user_name";
+    private final String AGE = "age";
 
     public AddUserServlet(JdbcTemplate<User> userTemplate) {
         this.userTemplate = userTemplate;
@@ -20,8 +22,9 @@ public class AddUserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String userName = Objects.requireNonNull(request.getParameter("user_name"));
-        int age = Integer.valueOf(Objects.requireNonNull(request.getParameter("age")));
+
+        String userName = Objects.requireNonNull(request.getParameter(USER_NAME));
+        int age = Integer.valueOf(Objects.requireNonNull(request.getParameter(AGE)));
 
         try {
             userTemplate.create(new User(userName, age));

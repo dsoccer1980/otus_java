@@ -52,16 +52,22 @@ class ServletsTest {
         return new URL("http://localhost:" + PORT + part);
     }
 
+    private HttpURLConnection getConnection(String url, String requestMethod, String username, String password) throws IOException {
+        HttpURLConnection connection = (HttpURLConnection) makeUrl(url).openConnection();
+        connection.setAuthenticator(new Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password.toCharArray());
+            }
+        });
+        connection.setRequestMethod(requestMethod);
+        return connection;
+    }
+
     @Test
     @DisplayName("test /admin/users")
     void getAllUsers() throws IOException {
-        HttpURLConnection connection = (HttpURLConnection) makeUrl("/admin/users").openConnection();
-        connection.setAuthenticator(new Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("admin", "pass".toCharArray());
-            }
-        });
-        connection.setRequestMethod("GET");
+        HttpURLConnection connection = getConnection("/admin/users", "GET", "admin", "pass");
+
         assertEquals(HttpStatus.OK_200, connection.getResponseCode(), "doGet works");
 
         StringBuilder stringBuilder = new StringBuilder();
@@ -77,26 +83,16 @@ class ServletsTest {
     @Test
     @DisplayName("test /admin/user")
     void addUser() throws IOException {
-        HttpURLConnection connection = (HttpURLConnection) makeUrl("/admin/addUser?user_name=New&age=24").openConnection();
-        connection.setAuthenticator(new Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("admin", "pass".toCharArray());
-            }
-        });
-        connection.setRequestMethod("POST");
+        HttpURLConnection connection = getConnection("/admin/addUser?user_name=New&age=24", "POST", "admin", "pass");
+
         assertEquals(HttpStatus.OK_200, connection.getResponseCode(), "doPost works");
     }
 
     @Test
     @DisplayName("test /admin/users with wrong password")
     void getUsersWithWrongAuth() throws IOException {
-        HttpURLConnection connection = (HttpURLConnection) makeUrl("/admin/users").openConnection();
-        connection.setAuthenticator(new Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("admin", "wrong".toCharArray());
-            }
-        });
-        connection.setRequestMethod("GET");
+        HttpURLConnection connection = getConnection("/admin/users", "GET", "admin", "wrong");
+
         assertEquals(HttpStatus.UNAUTHORIZED_401, connection.getResponseCode());
 
     }
