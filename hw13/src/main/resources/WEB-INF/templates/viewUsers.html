@@ -1,9 +1,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" content="text/html;" lang="en">
 <head>
     <title>Users list</title>
-    <script type="text/JavaScript">
+    <meta charset="UTF-8"/>
+    <script type="text/JavaScript" charset="UTF-8">
         function getDataFromServer() {
-            fetch('/admin/users')
+            fetch('user/list')
                 .then(function (response) {
                     return response.json();
                 })
@@ -31,8 +32,8 @@
 <br> <br>
 
 <H3>Add new user</H3>
-<form method="post" action="/admin/addUser">
-    Name: <input type="text" name="user_name"> <br> <br>
+<form method="post" action="user/create">
+    Name: <input type="text" name="name"> <br> <br>
     Age:  <input type="text" name="age"> <br> <br>
     <input type="submit">
 </form>

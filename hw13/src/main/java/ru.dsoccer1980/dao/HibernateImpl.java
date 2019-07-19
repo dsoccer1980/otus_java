@@ -10,13 +10,10 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Optional;
 
+
 public class HibernateImpl<T> implements JdbcTemplate<T> {
     private final SessionFactory sessionFactory;
-    private CacheEngine<Long, T> cacheEngine;
-
-    public HibernateImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+    private final CacheEngine<Long, T> cacheEngine;
 
     public HibernateImpl(SessionFactory sessionFactory, CacheEngine<Long, T> cacheEngine) {
         this.sessionFactory = sessionFactory;
