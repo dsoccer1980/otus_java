@@ -1,0 +1,42 @@
+<html xmlns="http://www.w3.org/1999/xhtml" content="text/html;" lang="en">
+<head>
+    <title>Users list</title>
+    <meta charset="UTF-8"/>
+    <script type="text/JavaScript" charset="UTF-8">
+        function getDataFromServer() {
+            fetch('user/list')
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (dataSrv) {
+                    var table = document.getElementById("users");
+
+                    dataSrv.forEach(function (item, index) {
+                        var row = table.insertRow(index);
+                        var cell1 = row.insertCell(0);
+                        var cell2 = row.insertCell(1);
+                        cell1.innerHTML = item.name;
+                        cell2.innerHTML = item.age;
+                    });
+                })
+
+        }
+    </script>
+</head>
+<body onload="getDataFromServer()">
+<h1>Users list</h1>
+
+<table id="users" border="1">
+</table>
+
+<br> <br>
+
+<H3>Add new user</H3>
+<form method="post" action="user/create">
+    Name: <input type="text" name="name"> <br> <br>
+    Age:  <input type="text" name="age"> <br> <br>
+    <input type="submit">
+</form>
+
+</body>
+</html>
