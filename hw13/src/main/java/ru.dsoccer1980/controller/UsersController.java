@@ -1,6 +1,5 @@
 package ru.dsoccer1980.controller;
 
-import com.google.gson.Gson;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -30,10 +29,8 @@ public class UsersController {
 
     @GetMapping("/user/list")
     @ResponseBody
-    public String getUsers() {
-        List<User> users = userTemplate.getAll(User.class);
-
-        return new Gson().toJson(users);
+    public List<User> getUsers() {
+        return userTemplate.getAll(User.class);
     }
 
     @PostMapping("/user/create")
