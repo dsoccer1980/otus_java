@@ -1,30 +1,38 @@
 package ru.dsoccer1980;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class Main {
 
     private int count = 0;
-    private volatile boolean isThread1 = true;
     private boolean isReverse = false;
-
+    private AtomicInteger currentQueueThread = new AtomicInteger(1);
 
     public static void main(String[] args) {
         new Main().go();
-
     }
 
-    private void inc(int nrThread) {
+    private void go() {
+        Thread thread1 = new Thread(() -> print(1));
+        Thread thread2 = new Thread(() -> print(2));
+
+        thread1.start();
+        thread2.start();
+    }
+
+    private void print(int nrThread) {
         for (int i = 0; i < 20; i++) {
             if (nrThread == 1) {
-                while (!isThread1) {
+                while (currentQueueThread.get() != 1) {
                     Thread.onSpinWait();
                 }
-                System.out.println(Thread.currentThread().getName() + ":" + count);
-                isThread1 = !isThread1;
+                System.out.println("Поток1:" + count);
+                currentQueueThread.incrementAndGet();
             } else {
-                while (isThread1) {
+                while (currentQueueThread.get() != 2) {
                     Thread.onSpinWait();
                 }
-                System.out.println(Thread.currentThread().getName() + ":" + count);
+                System.out.println("Поток2:" + count);
                 if (isReverse) {
                     count--;
                 } else {
@@ -33,26 +41,12 @@ public class Main {
                 if (count >= 10) {
                     isReverse = true;
                 }
-                isThread1 = !isThread1;
+                currentQueueThread.decrementAndGet();
             }
-
-
         }
-
-
     }
 
 
-    private void go() {
-
-        Thread thread1 = new Thread(() -> inc(1));
-        Thread thread2 = new Thread(() -> inc(2));
-
-        thread1.start();
-        thread2.start();
-
-
-    }
 }
 
 
