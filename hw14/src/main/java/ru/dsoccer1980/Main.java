@@ -1,49 +1,42 @@
 package ru.dsoccer1980;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Main {
 
-    private int count = 0;
-    private boolean isReverse = false;
-    private AtomicInteger currentQueueThread = new AtomicInteger(1);
+    private ConcurrentLinkedQueue<Thread> queue = new ConcurrentLinkedQueue<>();
 
     public static void main(String[] args) {
         new Main().go();
     }
 
     private void go() {
-        Thread thread1 = new Thread(() -> print(1));
-        Thread thread2 = new Thread(() -> print(2));
+        Thread thread1 = new Thread(this::print);
+        Thread thread2 = new Thread(this::print);
+
+        queue.add(thread1);
+        queue.add(thread2);
 
         thread1.start();
         thread2.start();
     }
 
-    private void print(int nrThread) {
-        for (int i = 0; i < 20; i++) {
-            if (nrThread == 1) {
-                while (currentQueueThread.get() != 1) {
-                    Thread.onSpinWait();
-                }
-                System.out.println("Поток1:" + count);
-                currentQueueThread.incrementAndGet();
-            } else {
-                while (currentQueueThread.get() != 2) {
-                    Thread.onSpinWait();
-                }
-                System.out.println("Поток2:" + count);
-                if (isReverse) {
-                    count--;
-                } else {
-                    count++;
-                }
-                if (count >= 10) {
-                    isReverse = true;
-                }
-                currentQueueThread.decrementAndGet();
-            }
+    private void print() {
+        for (int i = 0; i <= 10; i++) {
+            operate(i);
         }
+
+        for (int i = 9; i >= 0; i--) {
+            operate(i);
+        }
+    }
+
+    private void operate(int i) {
+        while (!Thread.currentThread().equals(queue.peek())) {
+            Thread.onSpinWait();
+        }
+        System.out.println(Thread.currentThread().getName() + ":" + i);
+        queue.add(queue.poll());
     }
 
 
