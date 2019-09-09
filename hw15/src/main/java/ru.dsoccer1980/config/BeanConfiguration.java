@@ -7,9 +7,6 @@ import ru.dsoccer1980.cache.CacheEngine;
 import ru.dsoccer1980.cache.CacheEngineImpl;
 import ru.dsoccer1980.dao.HibernateImpl;
 import ru.dsoccer1980.dao.JdbcTemplate;
-import ru.dsoccer1980.domain.Account;
-import ru.dsoccer1980.domain.AddressDataSet;
-import ru.dsoccer1980.domain.PhoneDataSet;
 import ru.dsoccer1980.domain.User;
 import ru.dsoccer1980.service.HibernateUtils;
 
@@ -28,8 +25,7 @@ public class BeanConfiguration {
 
     @Bean
     public SessionFactory getSessionFactory() {
-        return HibernateUtils.getSessionFactory("hibernate.cfg.xml",
-                Account.class, User.class, AddressDataSet.class, PhoneDataSet.class);
+        return HibernateUtils.getSessionFactory("hibernate.cfg.xml", User.class);
     }
 
 

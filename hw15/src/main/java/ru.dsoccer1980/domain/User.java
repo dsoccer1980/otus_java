@@ -4,8 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Entity
 @Data
@@ -20,19 +21,6 @@ public class User {
     private String name;
 
     private int age;
-
-    @OneToOne
-    private transient AddressDataSet addressDataSet;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private transient List<PhoneDataSet> phoneDataSets;
-
-    public User(String name, int age, AddressDataSet addressDataSet, List<PhoneDataSet> phoneDataSets) {
-        this.name = name;
-        this.age = age;
-        this.addressDataSet = addressDataSet;
-        this.phoneDataSets = phoneDataSets;
-    }
 
     public User(String name, int age) {
         this.name = name;
