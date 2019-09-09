@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Hello WebSocket</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script type="text/javascript" src="/lib/sockjs.min.js"></script>
+    <script type="text/javascript" src="/lib/stomp.min.js"></script>
+    <script src="/app.js"></script>
+</head>
+<body>
+<div class="col-md-6">
+    <form class="form-inline">
+        <div class="form-group">
+            <label for="connect">WebSocket connection:</label>
+            <button id="connect" class="btn btn-default" type="submit">Connect</button>
+            <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect
+            </button>
+        </div>
+    </form>
+</div>
+
+<h3>Users list</h3>
+<table id="conversation" class="table table-striped">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Age</th>
+    </tr>
+    </thead>
+    <tbody id="listUsers">
+    </tbody>
+</table>
+
+<div>
+    <form id="create-form">
+        <h3>New User:</h3>
+
+        <label for="nameId">Name: </label>
+        <input id="nameId" name="name" type="text"/>
+        <br>
+
+        <label for="ageId">Age: </label>
+        <input id="ageId" name="age" type="text"/>
+        <br>
+        <button id="addId" class="btn btn-default" type="submit">Add</button>
+    </form>
+</div>
+
+</body>
+</html>

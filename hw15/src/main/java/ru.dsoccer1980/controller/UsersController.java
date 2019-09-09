@@ -24,7 +24,7 @@ public class UsersController {
 
     @GetMapping("/")
     public String firstPage() {
-        return "viewUsers.html";
+        return "index";
     }
 
     @GetMapping("/user/list")
