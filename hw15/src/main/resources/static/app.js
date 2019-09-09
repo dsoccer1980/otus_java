@@ -4,9 +4,9 @@ const setConnected = (connected) => {
     $("#connect").prop("disabled", connected);
     $("#disconnect").prop("disabled", !connected);
     if (connected) {
-        $("#conversation").show();
+        $("#create-form").show();
     } else {
-        $("#conversation").hide();
+        $("#create-form").hide();
     }
 }
 
@@ -26,11 +26,9 @@ const disconnect = () => {
     console.log("Disconnected");
 }
 
-const sendUser = () => stompClient.send("/app/user", {}, JSON.stringify(
-    {
-        'name': $("#nameId").val(),
-        'age': $("#ageId").val(),
-    }))
+const sendUser = () => {
+    stompClient.send("/app/user", {}, JSON.stringify({'name': $("#nameId").val(), 'age': $("#ageId").val()}))
+}
 
 const getUsers = () => stompClient.send("/app/users", {}, {})
 
@@ -48,4 +46,5 @@ $(function () {
     $("#disconnect").click(disconnect);
     $("#addId").click(sendUser);
     $("#getId").click(getUsers);
+    $("#create-form").hide();
 });

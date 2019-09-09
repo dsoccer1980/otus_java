@@ -1,6 +1,5 @@
 package ru.dsoccer1980.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
@@ -11,8 +10,11 @@ import ru.dsoccer1980.messageSystem.message.AddUserToDBMsg;
 @Controller
 public class MessageController {
 
-    @Autowired
-    private MessageSystem messageSystem;
+    private final MessageSystem messageSystem;
+
+    public MessageController(MessageSystem messageSystem) {
+        this.messageSystem = messageSystem;
+    }
 
     @MessageMapping("/user")
     @SendTo("/topic/response")

@@ -18,7 +18,6 @@ public class MessageSystem {
     private final Map<Address, LinkedBlockingQueue<Message>> messagesQueues = new HashMap<>();
     private final Map<Address, MessageSystemClient> clients = new HashMap<>();
 
-
     public void addMessageSystemClient(MessageSystemClient clint) {
         clients.put(clint.getAddress(), clint);
         messagesQueues.put(clint.getAddress(), new LinkedBlockingQueue<>());
@@ -34,13 +33,11 @@ public class MessageSystem {
             Thread thread = new Thread(() -> {
                 while (true) {
                     LinkedBlockingQueue<Message> queue = messagesQueues.get(entry.getKey());
-                    Message message = null;
+                    Message message;
                     try {
                         message = queue.take();
                         message.exec(entry.getValue());
-                    } catch (InterruptedException e) {
-                        return;
-                    } catch (RuntimeException e) {
+                    } catch (InterruptedException | RuntimeException e) {
                         return;
                     }
                 }
