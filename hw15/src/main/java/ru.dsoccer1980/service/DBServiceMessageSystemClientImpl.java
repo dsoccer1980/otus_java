@@ -10,6 +10,8 @@ import ru.dsoccer1980.domain.User;
 import ru.dsoccer1980.messageSystem.Address;
 import ru.dsoccer1980.messageSystem.MessageSystem;
 
+import javax.annotation.PostConstruct;
+
 
 @Service
 public class DBServiceMessageSystemClientImpl extends HibernateImpl<User> implements DBServiceMessageSystemClient {
@@ -23,6 +25,11 @@ public class DBServiceMessageSystemClientImpl extends HibernateImpl<User> implem
     public DBServiceMessageSystemClientImpl(SessionFactory sessionFactory, CacheEngine<Long, User> cacheEngine, MessageSystem messageSystem) {
         super(sessionFactory, cacheEngine);
         this.messageSystem = messageSystem;
+    }
+
+    @PostConstruct
+    private void init() {
+        messageSystem.addMessageSystemClient(this);
     }
 
 }

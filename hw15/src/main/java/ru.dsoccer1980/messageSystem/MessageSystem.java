@@ -18,9 +18,9 @@ public class MessageSystem {
     private final Map<Address, LinkedBlockingQueue<Message>> messagesQueues = new HashMap<>();
     private final Map<Address, MessageSystemClient> clients = new HashMap<>();
 
-    public void addMessageSystemClient(MessageSystemClient clint) {
-        clients.put(clint.getAddress(), clint);
-        messagesQueues.put(clint.getAddress(), new LinkedBlockingQueue<>());
+    public void addMessageSystemClient(MessageSystemClient client) {
+        clients.put(client.getAddress(), client);
+        messagesQueues.put(client.getAddress(), new LinkedBlockingQueue<>());
     }
 
     public void sendMessage(Message message) {
