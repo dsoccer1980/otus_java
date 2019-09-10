@@ -37,7 +37,8 @@ public class MessageSystem {
                     try {
                         message = queue.take();
                         message.exec(entry.getValue());
-                    } catch (InterruptedException | RuntimeException e) {
+                    } catch (Exception e) {
+                        e.printStackTrace();
                         return;
                     }
                 }
