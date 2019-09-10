@@ -10,8 +10,8 @@ public class AddUserToDBMsg extends ToDBMsg {
 
     private final User user;
 
-    public AddUserToDBMsg(User user) {
-        super(new Address("DBService"));
+    public AddUserToDBMsg(User user, Address address) {
+        super(address);
         this.user = user;
     }
 
@@ -22,6 +22,6 @@ public class AddUserToDBMsg extends ToDBMsg {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        client.getMessageSystem().sendMessage(new ShowAddedUserToFrontendMsg(user));
+        client.getMessageSystem().sendMessage(new ShowAddedUserToFrontendMsg(user, new Address("Frontend")));
     }
 }

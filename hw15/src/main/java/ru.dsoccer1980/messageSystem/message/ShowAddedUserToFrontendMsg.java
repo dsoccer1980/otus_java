@@ -9,8 +9,8 @@ public class ShowAddedUserToFrontendMsg extends ToFrontendMsg {
 
     private final User user;
 
-    public ShowAddedUserToFrontendMsg(User user) {
-        super(new Address("Frontend"));
+    public ShowAddedUserToFrontendMsg(User user, Address address) {
+        super(address);
         this.user = user;
     }
 
