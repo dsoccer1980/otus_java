@@ -46,7 +46,7 @@ public class BeanConfiguration {
 
     @Bean
     public DBServiceMessageSystemClient getDBServiceMessageSystemClient() {
-        DBServiceMessageSystemClientImpl dbServiceMessageSystemClient = new DBServiceMessageSystemClientImpl(getSessionFactory(), getCacheEngine(), getMessageSystem());
+        DBServiceMessageSystemClient dbServiceMessageSystemClient = new DBServiceMessageSystemClientImpl(getSessionFactory(), getCacheEngine(), getMessageSystem());
         dbServiceMessageSystemClient.setAddress(new Address(dbServiceAddress));
         getMessageSystem().addMessageSystemClient(dbServiceMessageSystemClient);
         return dbServiceMessageSystemClient;
@@ -54,7 +54,7 @@ public class BeanConfiguration {
 
     @Bean
     public FrontendMessageSystemClient getFrontendMessageSystemClient() {
-        FrontendMessageSystemClientImpl frontendMessageSystemClient = new FrontendMessageSystemClientImpl(getMessageSystem());
+        FrontendMessageSystemClient frontendMessageSystemClient = new FrontendMessageSystemClientImpl(getMessageSystem());
         frontendMessageSystemClient.setAddress(new Address(frontendAddress));
         getMessageSystem().addMessageSystemClient(frontendMessageSystemClient);
         return frontendMessageSystemClient;
