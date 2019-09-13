@@ -3,7 +3,7 @@ package ru.dsoccer1980.messageSystem.message;
 
 import ru.dsoccer1980.domain.User;
 import ru.dsoccer1980.messageSystem.Address;
-import ru.dsoccer1980.service.FrontendServiceMessageSystemClient;
+import ru.dsoccer1980.service.FrontendMessageSystemClient;
 
 public class ShowAddedUserToFrontendMsg extends ToFrontendMsg {
 
@@ -15,7 +15,7 @@ public class ShowAddedUserToFrontendMsg extends ToFrontendMsg {
     }
 
     @Override
-    protected void exec(FrontendServiceMessageSystemClient frontendService) {
+    protected void exec(FrontendMessageSystemClient frontendService) {
         frontendService.addedUser(user);
     }
 

@@ -3,7 +3,7 @@ package ru.dsoccer1980.messageSystem.message;
 
 import ru.dsoccer1980.messageSystem.Address;
 import ru.dsoccer1980.messageSystem.MessageSystemClient;
-import ru.dsoccer1980.service.FrontendServiceMessageSystemClient;
+import ru.dsoccer1980.service.FrontendMessageSystemClient;
 
 public abstract class ToFrontendMsg extends Message {
 
@@ -13,11 +13,11 @@ public abstract class ToFrontendMsg extends Message {
 
     @Override
     public void exec(MessageSystemClient client) {
-        if (client instanceof FrontendServiceMessageSystemClient) {
-            exec((FrontendServiceMessageSystemClient) client);
+        if (client instanceof FrontendMessageSystemClient) {
+            exec((FrontendMessageSystemClient) client);
         }
     }
 
-    protected abstract void exec(FrontendServiceMessageSystemClient frontendService);
+    protected abstract void exec(FrontendMessageSystemClient frontendService);
 
 }
