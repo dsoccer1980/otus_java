@@ -17,6 +17,9 @@ public class MessageController {
     @Value("${address.dbservice}")
     private String dbServiceAddress;
 
+    @Value("${address.frontend}")
+    private String frontEndAddress;
+
     public MessageController(MessageSystem messageSystem) {
         this.messageSystem = messageSystem;
     }
@@ -24,7 +27,7 @@ public class MessageController {
     @MessageMapping("/user")
     @SendTo("/topic/response")
     public void putUser(User user) {
-        messageSystem.sendMessage(new AddUserToDBMsg(user, new Address(dbServiceAddress)));
+        messageSystem.sendMessage(new AddUserToDBMsg(user, new Address(dbServiceAddress), new Address(frontEndAddress)));
     }
 
 }
