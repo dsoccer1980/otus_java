@@ -29,13 +29,16 @@ public class MessageSystemImpl implements MessageSystem {
             Thread thread = new Thread(() -> {
                 while (true) {
                     LinkedBlockingQueue<Message> queue = messagesQueues.get(entry.getKey());
-                    Message message;
+                    Message message = null;
                     try {
                         message = queue.take();
                         message.exec(entry.getValue());
                     } catch (Exception e) {
                         e.printStackTrace();
-                        return;
+                        if (message != null) {
+                            message.setException(e);
+                            message.errorHandler(entry.getValue());
+                        }
                     }
                 }
             });

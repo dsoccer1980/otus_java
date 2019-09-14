@@ -9,7 +9,11 @@ import ru.dsoccer1980.messageSystem.MessageSystemClient;
 @AllArgsConstructor
 public abstract class Message {
 
-    private final Address to;
+    protected final Address to;
 
     public abstract void exec(MessageSystemClient client);
+
+    public abstract void setException(Exception exception);
+
+    public abstract void errorHandler(MessageSystemClient client);
 }

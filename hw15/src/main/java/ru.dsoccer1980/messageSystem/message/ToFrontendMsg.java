@@ -18,6 +18,15 @@ public abstract class ToFrontendMsg extends Message {
         }
     }
 
+    @Override
+    public void errorHandler(MessageSystemClient client) {
+        if (client instanceof FrontendMessageSystemClient) {
+            errorHandler((FrontendMessageSystemClient) client);
+        }
+    }
+
     protected abstract void exec(FrontendMessageSystemClient frontendService);
+
+    protected abstract void errorHandler(FrontendMessageSystemClient client);
 
 }

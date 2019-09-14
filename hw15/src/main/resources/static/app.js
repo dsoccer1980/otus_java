@@ -15,6 +15,7 @@ const connect = () => {
     stompClient.connect({}, (frame) => {
         setConnected(true);
         stompClient.subscribe('/topic/response', (user) => showUser(JSON.parse(user.body)));
+        stompClient.subscribe('/topic/response2', (message) => showLog(JSON.parse(message.body).msg));
     });
 }
 
@@ -35,7 +36,13 @@ const getUsers = () => stompClient.send("/app/users", {}, {})
 const showUser = (user) => {
     if (user) {
         $("#listUsers").append("<tr><td>" + user.id + "</td><td>" + user.name + "</td><td>" + user.age + "</td></tr>");
+        $("#log").hide();
     }
+}
+
+const showLog = (msg) => {
+    $("#log").show();
+    $("#log").text(msg);
 }
 
 $(function () {

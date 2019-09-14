@@ -19,5 +19,14 @@ public abstract class ToDBMsg extends Message {
         }
     }
 
+    @Override
+    public void errorHandler(MessageSystemClient client) {
+        if (client instanceof DBServiceMessageSystemClientImpl) {
+            errorHandler((DBServiceMessageSystemClientImpl) client);
+        }
+    }
+
     protected abstract void exec(DBServiceMessageSystemClient client);
+
+    protected abstract void errorHandler(DBServiceMessageSystemClient client);
 }

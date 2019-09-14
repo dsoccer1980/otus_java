@@ -6,4 +6,6 @@ import ru.dsoccer1980.messageSystem.MessageSystemClient;
 
 public interface FrontendMessageSystemClient extends MessageSystemClient {
     void addedUser(User user);
+
+    void errorHandler(Exception exception);
 }
