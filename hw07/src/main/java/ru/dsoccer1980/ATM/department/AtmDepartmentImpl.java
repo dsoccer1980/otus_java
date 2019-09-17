@@ -10,7 +10,6 @@ import java.util.List;
 public class AtmDepartmentImpl implements AtmDepartment {
     private List<CashMachine> cashMachineList = new ArrayList<>();
 
-
     @Override
     public void addCashMachine(CashMachine cashMachine) {
         if (cashMachine instanceof Middleware) {
@@ -20,7 +19,6 @@ public class AtmDepartmentImpl implements AtmDepartment {
         } else {
             throw new UnSupportedOperationException("Not supported");
         }
-
         cashMachineList.add(cashMachine);
     }
 

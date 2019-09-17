@@ -17,7 +17,6 @@ public class Main {
         cashMachine2.put(Banknote.FIFTY);
         System.out.println("Остаток в банкомате2: " + cashMachine2.rest());
 
-
         CashMachine cashMachine3 = new CashMachineImpl();
         cashMachine3.put(Banknote.FIVE);
         cashMachine3.put(Banknote.TEN);
