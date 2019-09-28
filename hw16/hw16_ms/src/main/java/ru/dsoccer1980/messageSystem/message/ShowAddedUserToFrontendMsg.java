@@ -25,7 +25,6 @@ public class ShowAddedUserToFrontendMsg extends ToFrontendMsg {
 
     @Override
     protected void errorHandler(FrontendMessageSystemClient client) {
-        client.getMessageSystem().sendMessage(new ErrorToFrontendMsg(exception, to));
     }
 
     public void setException(Exception exception) {

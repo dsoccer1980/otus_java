@@ -26,7 +26,6 @@ public class BeanConfiguration {
     public FrontendMessageSystemClient getFrontendMessageSystemClient(MessageSystem messageSystem) {
         FrontendMessageSystemClient frontendMessageSystemClient = new FrontendMessageSystemClientImpl(messageSystem);
         frontendMessageSystemClient.setAddress(new Address(frontendAddress));
-        messageSystem.addMessageSystemClient(frontendMessageSystemClient);
         return frontendMessageSystemClient;
     }
 

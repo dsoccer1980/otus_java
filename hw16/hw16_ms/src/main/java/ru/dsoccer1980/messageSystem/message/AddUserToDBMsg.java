@@ -28,7 +28,6 @@ public class AddUserToDBMsg extends ToDBMsg {
 
     @Override
     protected void errorHandler(DBServiceMessageSystemClient client) {
-        client.getMessageSystem().sendMessage(new ErrorToFrontendMsg(exception, sentAddress));
     }
 
     @Override

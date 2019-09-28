@@ -49,7 +49,6 @@ public class BeanConfiguration {
     public DBServiceMessageSystemClient getDBServiceMessageSystemClient(MessageSystem messageSystem, JdbcTemplate<User> jdbcTemplate) {
         DBServiceMessageSystemClient dbServiceMessageSystemClient = new DBServiceMessageSystemClientImpl(messageSystem, jdbcTemplate);
         dbServiceMessageSystemClient.setAddress(new Address(dbServiceAddress));
-        messageSystem.addMessageSystemClient(dbServiceMessageSystemClient);
         return dbServiceMessageSystemClient;
     }
 
