@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Users list</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <script src="/app.js"></script>
+</head>
+<body>
+<div>
+    <form>
+        <div>
+            <label for="connect">WebSocket connection:</label>
+            <button id="connect" type="submit">Connect</button>
+            <button id="disconnect" type="submit" disabled="disabled">Disconnect
+            </button>
+        </div>
+    </form>
+</div>
+
+<h3>Users list</h3>
+<div>
+    <table id="conversation" border="1">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Age</th>
+        </tr>
+        </thead>
+        <tbody id="listUsers">
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <form id="create-form">
+        <h3>New User:</h3>
+
+        <label for="nameId">Name: </label>
+        <input id="nameId" name="name" type="text"/>
+        <br>
+
+        <label for="ageId">Age: </label>
+        <input id="ageId" name="age" type="text"/>
+        <br>
+        <button id="addId" type="submit">Add</button>
+    </form>
+</div>
+
+<br>
+<span id="log">
+</span>
+
+</body>
+</html>
