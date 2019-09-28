@@ -14,24 +14,29 @@ import java.util.concurrent.TimeUnit;
 @SpringBootApplication
 public class MsMain {
 
-    private static final String CLIENT_START_COMMAND = "java -jar ../hw16_frontend/target/fclient.jar";
-    private static final int CLIENT_START_DELAY_SEC = 5;
+    private static final String FRONTEND_START_COMMAND = "java -jar ../hw16_frontend/target/fclient.jar";
+    private static final String DB_START_COMMAND = "java -jar ../hw16_db/target/dbclient.jar";
+    private static final int CLIENT_START_DELAY_SEC = 2;
 
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(MsMain.class, args);
         context.getBean(MessageSystem.class).start();
+        start();
     }
 
     private static void start() {
-        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-        startClient(executorService);
-        executorService.shutdown();
+        ScheduledExecutorService executorService1 = Executors.newSingleThreadScheduledExecutor();
+        startClient(executorService1, FRONTEND_START_COMMAND);
+        ScheduledExecutorService executorService2 = Executors.newSingleThreadScheduledExecutor();
+        startClient(executorService2, DB_START_COMMAND);
+        executorService1.shutdown();
+        executorService2.shutdown();
     }
 
-    private static void startClient(ScheduledExecutorService executorService) {
+    private static void startClient(ScheduledExecutorService executorService, String command) {
         executorService.schedule(() -> {
             try {
-                new ProcessRunnerImpl().start(CLIENT_START_COMMAND);
+                new ProcessRunnerImpl().start(command);
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -87,7 +87,6 @@ public class MessageSystemImpl implements MessageSystem {
                     while (input == null) {
                         input = in.readLine();
                         if (input != null) {
-                            System.out.println(">>>From frontend:" + input);
                             ClientDB client = databaseClients.peek();
                             if (client != null) {
                                 client.out.println(input);
@@ -126,7 +125,6 @@ public class MessageSystemImpl implements MessageSystem {
                     while (input == null) {
                         input = in.readLine();
                         if (input != null) {
-                            System.out.println("From db:" + input);
                             Client client = frontendClients.peek();
                             if (client != null) {
                                 client.out.println(input);
