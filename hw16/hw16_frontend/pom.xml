@@ -54,7 +54,7 @@
     </dependencies>
 
     <build>
-        <finalName>fclient</finalName>
+        <finalName>frontclient</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

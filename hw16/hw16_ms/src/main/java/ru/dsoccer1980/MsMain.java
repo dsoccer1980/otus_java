@@ -14,8 +14,8 @@ import java.util.concurrent.TimeUnit;
 @SpringBootApplication
 public class MsMain {
 
-    private static final String FRONTEND_START_COMMAND = "java -jar ../hw16_frontend/target/fclient.jar";
-    private static final String DB_START_COMMAND = "java -jar ../hw16_db/target/dbclient.jar";
+    private static final String FRONTEND_START_COMMAND = "java -Dserver.port=8080 -jar ../hw16_frontend/target/frontclient.jar ";
+    private static final String DB_START_COMMAND = "java -jar ../hw16_db/target/dbservice.jar";
     private static final int CLIENT_START_DELAY_SEC = 2;
 
     public static void main(String[] args) {
