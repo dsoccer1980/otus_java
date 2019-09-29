@@ -1,7 +1,6 @@
 package ru.dsoccer1980.messageSystem;
 
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -19,10 +18,8 @@ public class MessageSystemImpl implements MessageSystem {
     private final int NUMBER_THREAD_IN_POOL = 3;
     private final LinkedBlockingQueue<Client> frontendClients = new LinkedBlockingQueue<>();
     private final LinkedBlockingQueue<Client> databaseClients = new LinkedBlockingQueue<>();
-    @Value("${port.frontend}")
-    private int PORT_F;
-    @Value("${port.db}")
-    private int PORT_DB;
+    private int PORT_F = 5050;
+    private int PORT_DB = 5051;
     private ExecutorService executorService = Executors.newFixedThreadPool(NUMBER_THREAD_IN_POOL);
 
     public void start() {
