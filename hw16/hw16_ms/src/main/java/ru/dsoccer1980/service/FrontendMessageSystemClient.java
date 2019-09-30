@@ -1,0 +1,14 @@
+package ru.dsoccer1980.service;
+
+
+import ru.dsoccer1980.domain.User;
+import ru.dsoccer1980.messageSystem.MessageSystemClient;
+import ru.dsoccer1980.messageSystem.message.Message;
+
+public interface FrontendMessageSystemClient extends MessageSystemClient {
+    void addedUser(User user);
+
+    void errorHandler(Exception exception);
+
+    void sendMessage(Message message);
+}

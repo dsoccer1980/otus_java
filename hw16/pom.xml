@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>OtusJavaHW</artifactId>
+        <groupId>ru.dsoccer1980</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>hw16</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>hw16_ms</module>
+        <module>hw16_frontend</module>
+        <module>hw16_db</module>
+    </modules>
+
+</project>
