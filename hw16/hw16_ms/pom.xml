@@ -99,41 +99,43 @@
 
     </dependencies>
 
+    <!--      2      -->
+    <!--<build>-->
+        <!--<plugins>-->
+            <!--<plugin>-->
+                <!--<groupId>org.springframework.boot</groupId>-->
+                <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
+            <!--</plugin>-->
+        <!--</plugins>-->
+    <!--</build>-->
+
+    <!--      1      -->
     <build>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>maven-assembly-plugin</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <mainClass>ru.dsoccer1980.MsMain</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
             </plugin>
         </plugins>
     </build>
-
-    <!--<build>-->
-    <!--<plugins>-->
-    <!--<plugin>-->
-    <!--<artifactId>maven-assembly-plugin</artifactId>-->
-    <!--<executions>-->
-    <!--<execution>-->
-    <!--<id>maven-assembly-plugin</id>-->
-    <!--<phase>package</phase>-->
-    <!--<goals>-->
-    <!--<goal>single</goal>-->
-    <!--</goals>-->
-    <!--</execution>-->
-    <!--</executions>-->
-    <!--<configuration>-->
-    <!--<appendAssemblyId>false</appendAssemblyId>-->
-    <!--<descriptorRefs>-->
-    <!--<descriptorRef>jar-with-dependencies</descriptorRef>-->
-    <!--</descriptorRefs>-->
-    <!--<archive>-->
-    <!--<manifest>-->
-    <!--<mainClass>ru.dsoccer1980.MsMain</mainClass>-->
-    <!--</manifest>-->
-    <!--</archive>-->
-    <!--</configuration>-->
-    <!--</plugin>-->
-    <!--</plugins>-->
-    <!--</build>-->
 
 </project>
